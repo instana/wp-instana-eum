@@ -3,7 +3,7 @@
 Plugin Name: Instana EUM
 Plugin URI:  https://github.com/instana/wp-instana-eum
 Description: Instana End User Monitoring
-Version:     1.0.0
+Version:     1.0.1
 Author:      Instana
 Author URI:  http://instana.com
 License:     Apache License 2.0
@@ -160,10 +160,6 @@ add_action(
 add_action(
     'wp_head',
     function() {
-        // do not insert the tracking code if there is no trace id
-        if (!isset($_SERVER[X_INSTANA_T])) {
-            return;
-        }
         $baseUrl = get_option(INSTANA_EUM_BASE_URL, DEFAULT_EUM_BASE_URL);
         $scriptName = boolval(get_option(INSTANA_EUM_USE_DEBUG, false)) ? 'eum.debug.js' : 'eum.min.js';
 
@@ -173,7 +169,9 @@ add_action(
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','%s/%s','ineum');%s", $baseUrl, $scriptName, PHP_EOL);
         printf("ineum('apiKey', '%s');%s", get_option(INSTANA_API_KEY, ''), PHP_EOL);
-        printf("ineum('traceId', '%s');%s", $_SERVER[X_INSTANA_T], PHP_EOL);
+        if (!isset($_SERVER[X_INSTANA_T])) {
+            printf("ineum('traceId', '%s');%s", $_SERVER[X_INSTANA_T], PHP_EOL);
+        }
         if ($baseUrl !== DEFAULT_EUM_BASE_URL) {
             printf("ineum('reportingUrl', '%s');%s", $baseUrl, PHP_EOL);
         }
