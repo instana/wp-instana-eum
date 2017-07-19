@@ -26,7 +26,7 @@ Q: What is Instana?
 A: Instana is the dynamic Application Performance Management solution that automatically monitors scaled modern applications and their quality of service.
 
 Q: Where do I find my API key?
-A: In Instana\'s settings dialog, you can select the End-User Monitoring menu item. In this dialog, keys can be generated for monitored applications.
+A: In Instana's settings dialog, you can select the End-User Monitoring menu item. In this dialog, keys can be generated for monitored applications.
 
 Q: Are you anonymizing IPs?
 Yes, IPs are anonymized. Specifically, the last octet of IPv4 addresses and the last 80 bits of IPv6 addresses are set to zeros.
