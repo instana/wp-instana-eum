@@ -3,7 +3,7 @@
 Plugin Name: Instana EUM
 Plugin URI:  https://github.com/instana/wp-instana-eum
 Description: Instana End User Monitoring
-Version:     1.0.2
+Version:     1.0.3
 Author:      Instana
 Author URI:  http://instana.com
 License:     Apache License 2.0
@@ -119,9 +119,10 @@ add_action(
             INSTANA_EUM_BASE_URL,
             'Base URL',
             function() {
+                $baseUrl = get_option(INSTANA_EUM_BASE_URL, DEFAULT_EUM_BASE_URL);
                 printf(
                     '<input type="text" name="instana_eum_base_url" value="%s">',
-                    esc_attr(get_option(INSTANA_EUM_BASE_URL, ''))
+                    esc_attr(empty($baseUrl) ? DEFAULT_EUM_BASE_URL : $baseUrl)
                 );
                 echo '<br><p class="description">Enter the Base URL to load script from and send beacons to';
             },
