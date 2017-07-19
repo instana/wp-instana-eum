@@ -161,21 +161,32 @@ add_action(
 add_action(
     'wp_head',
     function() {
+
         $baseUrl = get_option(INSTANA_EUM_BASE_URL, DEFAULT_EUM_BASE_URL);
         $scriptName = boolval(get_option(INSTANA_EUM_USE_DEBUG, false)) ? 'eum.debug.js' : 'eum.min.js';
+        $apiKey = get_option(INSTANA_API_KEY, '');
+
+        if (empty($apiKey)) {
+            return;
+        }
 
         echo '<!-- Instana End User Monitoring Beacon -->', PHP_EOL, '<script>';
+
         printf("(function(i,s,o,g,r,a,m){i['InstanaEumObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','%s/%s','ineum');%s", $baseUrl, $scriptName, PHP_EOL);
-        printf("ineum('apiKey', '%s');%s", get_option(INSTANA_API_KEY, ''), PHP_EOL);
+
+        printf("ineum('apiKey', '%s');%s", $apiKey, PHP_EOL);
+
         if (isset($_SERVER[X_INSTANA_T])) {
             printf("ineum('traceId', '%s');%s", $_SERVER[X_INSTANA_T], PHP_EOL);
         }
+
         if ($baseUrl !== DEFAULT_EUM_BASE_URL) {
             printf("ineum('reportingUrl', '%s');%s", $baseUrl, PHP_EOL);
         }
+
         echo trim(get_option(INSTANA_ADVANCED_SETTINGS) . PHP_EOL);
         echo '</script>', PHP_EOL;
     }
