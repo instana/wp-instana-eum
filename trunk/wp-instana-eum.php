@@ -3,7 +3,7 @@
 Plugin Name: Instana EUM
 Plugin URI:  https://github.com/instana/wp-instana-eum
 Description: Instana End User Monitoring
-Version:     1.0.1
+Version:     1.0.2
 Author:      Instana
 Author URI:  http://instana.com
 License:     Apache License 2.0
@@ -169,7 +169,7 @@ add_action(
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','%s/%s','ineum');%s", $baseUrl, $scriptName, PHP_EOL);
         printf("ineum('apiKey', '%s');%s", get_option(INSTANA_API_KEY, ''), PHP_EOL);
-        if (!isset($_SERVER[X_INSTANA_T])) {
+        if (isset($_SERVER[X_INSTANA_T])) {
             printf("ineum('traceId', '%s');%s", $_SERVER[X_INSTANA_T], PHP_EOL);
         }
         if ($baseUrl !== DEFAULT_EUM_BASE_URL) {
