@@ -3,11 +3,11 @@
 Plugin Name: Instana EUM
 Plugin URI:  https://github.com/instana/wp-instana-eum
 Description: Instana End User Monitoring
-Version:     0.1
+Version:     1.0.0
 Author:      Instana
 Author URI:  http://instana.com
-License:     MIT
-License URI: https://opensource.org/licenses/MIT
+License:     Apache License 2.0
+License URI: https://www.apache.org/licenses/LICENSE-2.0
 */
 
 namespace Instana;
